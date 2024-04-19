@@ -1,0 +1,136 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #2196F3; /* Azul primario */
+    color: #fff;
+    padding: 1px;
+    text-align: center;
+}
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu {
+    background-color: #64B5F6; /* Azul claro */
+    padding: 18px;
+    text-align: center;
+}
+
+.menu label {
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 3px;
+    border: 1px solid #BBDEFB; /* Azul más claro */
+    border-radius: 5px;
+}
+
+.menu input[type="checkbox"] {
+    display: none;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    display: none;
+}
+
+.menu input[type="checkbox"]:checked ~ .menu-list {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-list li {
+    margin: 0 10px;
+}
+
+.menu-list a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.menu-list a:hover {
+    background-color: #42A5F5; /* Azul más oscuro al pasar el ratón */
+}
+
+.menu2 {
+    background-color: #BBDEFB; /* Azul claro más claro */
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.menu-list2 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-list2 li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.menu-list2 a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 16px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.menu-list2 a:hover {
+    background-color: #64B5F6; /* Azul más oscuro al pasar el ratón */
+}
+
+.content-container {
+    width: 100%;
+    padding: 40px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.input{
+    width: 250px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+button{
+    font-size: 25px;
+    border: none;
+    width: 180px;
+    height: 60px;
+    border-radius: 10px;
+    background-color: rgb(204, 204, 204);
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: grey;
+}
