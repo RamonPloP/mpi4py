@@ -8,14 +8,14 @@
 <div class="content">
     <nav class="menu2">
         <ul class="menu-list2">
-            <li><a href="#">Agregar</a></li>
-            <li><a href="#">Listar</a></li>
+            <li><a href="{{ url_for('binary') }}">Regresar</a></li>
         </ul>
     </nav>
     <div class="container">
         {% block content %}
             <form action="/binaryres" method="post">
-                <input type="text" name="datos">
+                Lista de Numeros<input type="text" name="datos"> 
+                Numero a buscar<input type="text" name="target"> 
                 <button type="submit">Start</button>
             </form>
         {% endblock %}
