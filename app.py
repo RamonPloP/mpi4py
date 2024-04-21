@@ -17,6 +17,36 @@ def binary_search(arr, target):
             right = mid - 1
     return -1
 
+def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quicksort(left) + middle + quicksort(right)
+
+def parallel_quicksort(arr):
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
+
+    # Dividir los datos
+    local_data = np.array_split(arr, size)[rank]
+
+    # Ordenar localmente
+    sorted_local = quicksort(local_data)
+
+    # Recopilar los datos ordenados
+    sorted_data = comm.gather(sorted_local, root=0)
+
+    if rank == 0:
+        # Combinar los datos ordenados
+        sorted_array = np.concatenate(sorted_data)
+        return sorted_array
+    else:
+        return None
+
 @app.route('/')
 
 def index():
@@ -91,13 +121,34 @@ def binaryres():
 #---------------------------------------------------------------------
 
 @app.route('/quick')
-
 def quick():
     data = {
-    "title": "Quick Sort",
-    "datos": [1,2,3,4,5]
-}
+        "title": "Quick Sort",
+        "datos": [1, 2, 3, 4, 5]
+    }
     return render_template('quick.html', data=data)
 
+@app.route('/quickres', methods=["POST"])
+def quickres():
+    # Obtener los datos del formulario y convertirlos en un arreglo de enteros
+    arr = np.array(list(map(int, request.form['datos'].split(','))))
+
+    # Realizar el ordenamiento utilizando QuickSort
+    sorted_arr = parallel_quicksort(arr)
+
+    # Preparar los datos para mostrar en la plantilla
+    if sorted_arr is not None:
+        sorted_str = ','.join(map(str, sorted_arr))
+        msg = f"Arreglo ordenado: {sorted_str}"
+    else:
+        msg = "Error al procesar los datos"
+
+    data = {
+        "title": "Quick Sort",
+        "msg": msg
+    }
+
+    return render_template('quickres.html', data=data)
+
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
