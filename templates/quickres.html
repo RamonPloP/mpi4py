@@ -1,7 +1,8 @@
 {% extends 'quick.html' %}
 
 {% block content %}
-    {% for i in data %}
-
-    {% endfor %}
+    <div class="container">
+        <h2>{{ data.title }}</h2>
+        <p>{{ data.msg }}</p>
+    </div>
 {% endblock %}

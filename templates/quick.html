@@ -13,7 +13,10 @@
     </nav>
     <div class="container">
         {% block content %}
-
+            <form action="/quickres" method="post">
+                Lista de Numeros<input type="text" name="datos"> 
+                <button type="submit">Start</button>
+            </form>
         {% endblock %}
     </div>
 </div>
