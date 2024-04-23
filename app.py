@@ -3,7 +3,6 @@ from mpi4py import MPI
 import numpy as np
 import requests
 from bs4 import BeautifulSoup
-import re
 
 app = Flask(__name__)
 
@@ -150,9 +149,9 @@ def binaryres():
     if rank == 0:
         for i, res in enumerate(all_results):
             if res != -1:
-                msg = f"El elemento {target} fue encontrado en el proceso {i} en el índice {res}."
+                msg = f"El elemento {target} fue encontrado en el índice {res}."
             else:
-                msg = f"El elemento {target} no fue encontrado en el proceso {i}."
+                msg = f"El elemento {target} no fue encontrado."
 
     data = {
     "title": "Binary Search",
@@ -194,4 +193,4 @@ def quickres():
     return render_template('quickres.html', data=data)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True)
