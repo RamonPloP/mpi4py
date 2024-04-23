@@ -13,9 +13,36 @@
     </nav>
     <div class="container">
         {% block content %}
-            <form action="/binaryres" method="post">
-                Lista de Numeros<input type="text" name="datos"> 
-                Numero a buscar<input type="text" name="target"> 
+        <script>
+            function validarLista() {
+                var lista = document.getElementById("lista").value.trim();
+    
+                // Verifica si la lista está vacía
+                if (lista === "") {
+                    alert("Por favor ingresa una lista separada por comas.");
+                    return false;
+                }
+    
+                // Verifica si la lista contiene caracteres diferentes a números y comas
+                var regex = /^[\d,]+$/;
+                if (!regex.test(lista)) {
+                    alert("La lista solo debe contener números separados por comas.");
+                    return false;
+                }
+    
+                // Verifica si la lista termina con una coma
+                if (lista.endsWith(",")) {
+                    alert("La lista no debe terminar con una coma.");
+                    return false;
+                }
+    
+                // La lista es válida
+                return true;
+            }
+        </script>
+            <form action="/binaryres" method="post" onsubmit="return validarLista()">
+                Lista de Numeros<input type="text" placehoholder="Lista: 1,2,5,7,9,8" name="datos" required> 
+                Numero a buscar<input type="number" name="target" required> 
                 <button type="submit">Start</button>
             </form>
         {% endblock %}

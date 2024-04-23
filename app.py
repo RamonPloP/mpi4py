@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
 from mpi4py import MPI
 import numpy as np
+import requests
+from bs4 import BeautifulSoup
+import re
 
 app = Flask(__name__)
 
@@ -64,6 +67,46 @@ def web():
     "datos": [1,2,3,4,5]
 }
     return render_template('web.html', data=data)
+
+@app.route('/webres', methods=['POST'])
+
+def webres():        
+    # Inicialización de MPI
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
+
+    # Obtener la URL para hacer scraping
+    url = request.form['url']
+
+    # Procesa la URL asignada a este proceso
+    results = []
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    paragraphs = soup.find_all('p')
+    text_content = '\n'.join(p.get_text() for p in paragraphs)
+    results.append(text_content)
+
+    # Recolecta los resultados de todos los procesos
+    gathered_results = comm.gather(results, root=0)
+
+    # El proceso raíz combina los resultados e imprime la salida
+    if rank == 0:
+        combined_results = []
+        for process_results in gathered_results:
+            combined_results.extend(process_results)
+
+        # Combina todos los textos en un solo texto
+        combined_text = '\n'.join(combined_results)
+
+    print(combined_text)
+
+    data = {
+    "title": "Web Scrapping",
+    "datos": [1,2,3,4,5],
+    "texto": combined_text
+}
+    return render_template('webres.html', data=data)
 
 #---------------------------------------------------------------------
 

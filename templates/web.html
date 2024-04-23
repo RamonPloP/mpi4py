@@ -12,8 +12,12 @@
         </ul>
     </nav>
     <div class="container">
+        <form action="/webres" method="post">
+            <label for="texto">Ingrese una URL:</label>
+            <input type="text" name="url" required>
+            <button type="submit">Enviar</button>
+        </form>
         {% block content %}
-        
         {% endblock %}
     </div>
 </div>
